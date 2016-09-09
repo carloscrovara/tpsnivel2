@@ -1,12 +1,12 @@
 var numeroA = parseInt (prompt("Ingresar número")); 
 var numeroB = parseInt (prompt("Ingresar número")); 
 var resultado;
-var operaciones = ("Sumar", "Restar", "Multiplicar", "Dividir");
+var operaciones = ["Sumar", "Restar", "Multiplicar", "Dividir"];
 var operacionActual = prompt ("¿Qué operación querés realizar? Sumar, Restar, Multiplicar o Dividir");
 
 switch (operacionActual) { 
     case operaciones[0]: 
-      suma(); 
+      suma();
       break; 
     case operaciones[1]:
       resta(); 
