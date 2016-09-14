@@ -4,7 +4,7 @@ function Pelicula(id,descripcion,anio,duracion,actores,director) {
 	this.descripcion = descripcion;
 	this.anio = anio; 
 	this.duracion = duracion;
-	var actores = ['actor1', 'actor2', 'actor3', 'actor4', 'actor5'];
+	this.actores = actores;
 	this.director = director;
 
 	this.actualizarTitulo = function(nuevoTitulo) {
@@ -32,18 +32,13 @@ function Pelicula(id,descripcion,anio,duracion,actores,director) {
 	}
 
 	this.agregarActores = function() {
-		        var nuevoActor = prompt('Ingresar nombre de nuevo actor');
-				actores.push(nuevoActor);
-				console.log(actores);
-				var preguntaNuevoActor = prompt('¿Querés agregar otro actor? si / no' )
-				if (preguntaNuevoActor === 'si') {
-		        	var nuevoActor = prompt('Ingresar nombre de nuevo actor');
-					actores.push(nuevoActor);
-					console.log(actores);
-				}
-				else {
-					console.log(actores);
-				}
+    			var continuar = 1;
+    			var actor;
+    			do {
+       				actor = prompt('Ingrese nombre y apellido del actor');
+       				this.actores.push(actor);
+       				continuar = parseInt(prompt('Ingrese 1 para agregar otro actor o 0 para salir'));
+    			} while(continuar);
 	}
 
 	this.actualizarDirector = function(nuevoDirector) {
