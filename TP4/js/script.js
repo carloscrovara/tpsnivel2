@@ -1,4 +1,4 @@
-function Pelicula(id,descripcion,anio,duracion,actores,director) {
+function Pelicula(id,titulo,descripcion,anio,duracion,actores,director) {
 	this.id = id;
 	this.titulo = titulo;
 	this.descripcion = descripcion;
