@@ -6,10 +6,10 @@ function Pelicula(id,titulo) {
 
 	this.getId = function () {
         return this.id;
-    }
+	}
 	this.getTitulo = function () {
         return this.titulo;
-    }
+	}
 
 }
 
@@ -27,5 +27,45 @@ function agregarPelicula(peliculas) {
 	} while(continuar);
 }
 
+//consulta si se quiere ordenar peliculas por id o por titulo.
+function ordenadorPelicula() {
+    var respuestas = ['id', 'titulo'];
+    var consulta = prompt('¿Quiere ordenar las peliculas por id o por titulo?');
+    switch (consulta) {
+    	case respuestas[0]:
+			console.log(peliculas.sort(ordenarPeliculaId));
+			break; 
 
+    	case respuestas[1]:
+			console.log(peliculas.sort(ordenarPeliculaTitulo));
+			break;
+	}
+}	
 
+function ordenarPeliculaId(elementoA, elementoB) {
+        var resultado;
+       	if(elementoA.getId() < elementoB.getId()) {
+			return -1;
+		}
+		if(elementoA.getId() === elementoB.getId()) {
+			return 0;
+		}
+		if(elementoA.getId() > elementoB.getId()) {
+		return 1;
+		}
+		return resultado;
+}	
+
+function ordenarPeliculaTitulo(elementoA, elementoB) {
+        var resultado;
+       	if(elementoA.getTitulo() < elementoB.getTitulo()) {
+			return -1;
+		}
+		if(elementoA.getTitulo() === elementoB.getTitulo()) {
+			return 0;
+		}
+		if(elementoA.getTitulo() > elementoB.getTitulo()) {
+		return 1;
+		}
+		return resultado;
+}
