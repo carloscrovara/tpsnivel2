@@ -27,7 +27,12 @@ function agregarPelicula(peliculas) {
 	} while(continuar);
 }
 
-//consulta si se quiere ordenar peliculas por id o por titulo.
+// falta función indexOf
+
+
+/*Funciones para ordenar peliculas por id o por titulo. 
+Primero consulta si se quiere ordenar por id o por titulo.
+*/
 function ordenadorPelicula() {
     var respuestas = ['id', 'titulo'];
     var consulta = prompt('¿Quiere ordenar las peliculas por id o por titulo?');
@@ -44,28 +49,34 @@ function ordenadorPelicula() {
 
 function ordenarPeliculaId(elementoA, elementoB) {
         var resultado;
-       	if(elementoA.getId() < elementoB.getId()) {
+       	if (elementoA.getId() < elementoB.getId()) {
 			return -1;
 		}
-		if(elementoA.getId() === elementoB.getId()) {
+		if (elementoA.getId() === elementoB.getId()) {
 			return 0;
 		}
-		if(elementoA.getId() > elementoB.getId()) {
-		return 1;
+		if (elementoA.getId() > elementoB.getId()) {
+			return 1;
 		}
 		return resultado;
 }	
 
 function ordenarPeliculaTitulo(elementoA, elementoB) {
         var resultado;
-       	if(elementoA.getTitulo() < elementoB.getTitulo()) {
+       	if (elementoA.getTitulo() < elementoB.getTitulo()) {
 			return -1;
 		}
-		if(elementoA.getTitulo() === elementoB.getTitulo()) {
+		if (elementoA.getTitulo() === elementoB.getTitulo()) {
 			return 0;
 		}
-		if(elementoA.getTitulo() > elementoB.getTitulo()) {
-		return 1;
+		if (elementoA.getTitulo() > elementoB.getTitulo()) {
+			return 1;
 		}
 		return resultado;
+}
+
+//Función para eliminar pelicula.
+function eliminarPeliculaId() {
+	peliculas.splice(index,1);
+	console.log('La pelicula fue eliminada');
 }
