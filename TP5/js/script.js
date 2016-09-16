@@ -1,40 +1,31 @@
+var peliculas = [];
+
 function Pelicula(id,titulo) {
 	this.id = id;
 	this.titulo = titulo;
 
-	this.evaluarPelicula = function() {
-		var posicion = this.titulo.indexOf([i]);
-		if (posicion === -1) {
-			console.log('Este titulo no está ingresado previamente');
-		}
-		else {
-			console.log('Este título ya está ingresado');
-		}
-	}
-
-	this.agregarIdYTitulo = function() {
-         var continuar = 1; 
-         var nuevoId; 
-         var nuevoTitulo;
-    			do {
-       				nuevoId = prompt('Ingrese id de nueva pelicula');
-       				this.id.push(nuevoId);
-       				nuevaPelicula = prompt('Ingrese titulo de nueva pelicula');
-       				this.titulo.push(nuevoTitulo);                               
-       				continuar = parseInt(prompt('Ingrese 1 para agregar otro titulo o 0 para salir'));
-    			} while(continuar);         
+    this.getId = function () {
+        return this.id;
+    }
+    this.getTitulo = function () {
+        return this.titulo;
     }
 
-    this.eliminarPeliculaId = function() {
-    	removed = this.id.splice(index, [i]);
-    }
-	
 }
 
-	pelicula.sort(function (a, b){
-    	return (a.id - b.id)
-	})
+function agregarPelicula(peliculas) {
+         	    var continuar = 1;
+    		    var nuevaId;
+                var nuevoTitulo;
+                var nuevaPelicula;
+    		    do {
+       					nuevaId = prompt('Ingresar Id de nueva pelicula');
+                    	nuevoTitulo = prompt('Ingresar titulo de nueva pelicula');                                
+                    	nuevaPelicula = new Pelicula(nuevaId, nuevoTitulo);                            
+						peliculas.push(nuevaPelicula);
+       					continuar = parseInt(prompt('Ingrese 1 para agregar otra pelicula o 0 para salir'));
+    		    } while(continuar);
+}
 
-	pelicula.sort(function (a, b){
-		return (a.titulo - b.titulo)
-	})	
+
+
