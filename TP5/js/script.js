@@ -10,7 +10,6 @@ function Pelicula(id,titulo) {
 	this.getTitulo = function () {
         return this.titulo;
 	}
-
 }
 
 function agregarPelicula(peliculas) {
@@ -27,8 +26,33 @@ function agregarPelicula(peliculas) {
 	} while(continuar);
 }
 
-// falta función indexOf
+// Funcion indexOf para chequear si esta un id o titulo de pelicula.
 
+function chequearPeliculaId(peliculas) {
+	var ingresarId = parseInt(prompt('Ingresar id de pelicula'));
+	for (i in peliculas) {
+		if (peliculas.indexOf(ingresarId) !== -1) { 
+			console.log('Esta este id.');
+			break;
+		} else {
+			console.log('No esta este id.');
+			break;
+		}						
+	}
+}
+
+function chequearPeliculaTitulo(peliculas) {
+	var ingresarTitulo = prompt('Ingresar titulo de pelicula');
+	for (i in peliculas) {
+		if (peliculas.indexOf(ingresarTitulo) !== -1) { 
+			console.log('Esta este este titulo');
+			break;
+		} else {
+			console.log('No esta este titulo.');
+			break;
+		}						
+	}
+}
 
 /*Funciones para ordenar peliculas por id o por titulo. 
 Primero consulta si se quiere ordenar por id o por titulo.
