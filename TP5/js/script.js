@@ -27,31 +27,24 @@ function agregarPelicula(peliculas) {
 }
 
 // Funcion indexOf para chequear si esta un id o titulo de pelicula.
-
 function chequearPeliculaId(peliculas) {
 	var ingresarId = parseInt(prompt('Ingresar id de pelicula'));
-	for (i in peliculas) {
-		if (peliculas.indexOf(ingresarId) !== -1) { 
-			console.log('Esta este id.');
-			break;
-		} else {
-			console.log('No esta este id.');
-			break;
-		}						
-	}
+	var index = peliculas.indexOf(ingresarId);
+	if (index != -1) { 
+			console.log('Esta este id de pelicula.');
+	} else {
+			console.log('No esta este id de pelicula.');
+	}						
 }
 
 function chequearPeliculaTitulo(peliculas) {
 	var ingresarTitulo = prompt('Ingresar titulo de pelicula');
-	for (i in peliculas) {
-		if (peliculas.indexOf(ingresarTitulo) !== -1) { 
-			console.log('Esta este este titulo');
-			break;
-		} else {
-			console.log('No esta este titulo.');
-			break;
-		}						
-	}
+	var index = peliculas.indexOf(ingresarTitulo);
+	if (index != -1) { 
+			console.log('Esta este titulo de pelicula.');
+	} else {
+			console.log('No esta este titulo de pelicula.');
+	}						
 }
 
 /*Funciones para ordenar peliculas por id o por titulo. 
@@ -99,8 +92,11 @@ function ordenarPeliculaTitulo(elementoA, elementoB) {
 		return resultado;
 }
 
-//Función para eliminar pelicula.
+//Funcion para eliminar pelicula por id.
 function eliminarPeliculaId() {
+	var preguntaId = parseInt(prompt('Ingresar id de pelicula a eliminar'));	
+	var index = peliculas.indexOf(preguntaId); 
 	peliculas.splice(index,1);
-	console.log('La pelicula fue eliminada');
+	console.log('La pelicula fue eliminada.');
+	console.log(peliculas);
 }
