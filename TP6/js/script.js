@@ -7,11 +7,13 @@ function Pelicula (id, titulo) {
 	this.getId = function () {
 
         return this.id;
+
 	}
 
 	this.getTitulo = function () {
 
         return this.titulo;
+
 	}	
 }
 
@@ -76,23 +78,23 @@ var imdb = (function () {
 
         var resultado;
 
-       	if (elementoA.getId() < elementoB.getId()) {
+       		if (elementoA.getId() < elementoB.getId()) {
 
-			return -1;
+				return -1;
 
-		}
+			}
 
-		if (elementoA.getId() === elementoB.getId()) {
+			if (elementoA.getId() === elementoB.getId()) {
 
-			return 0;
+				return 0;
 
-		}
+			}
 
-		if (elementoA.getId() > elementoB.getId()) {
+			if (elementoA.getId() > elementoB.getId()) {
 
-			return 1;
+				return 1;
 
-		}
+			}
 
 		console.log (resultado);
 	}
