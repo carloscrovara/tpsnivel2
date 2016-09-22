@@ -17,7 +17,7 @@ function Pelicula (id, titulo) {
 	}	
 }
 
-var imdb = (function () {
+var Imdb = (function () {
 	
 	var peliculas = [];
 
@@ -25,20 +25,36 @@ var imdb = (function () {
 
 		var posicion = -1; 
 
-		var peliculaActual;
-
 		for(i = 0; i < peliculas.length && posicion === -1; i++) {
 
-			if (peliculaActual.id === pelicula.id) {
+			if (peliculas[i].id === pelicula.id) {
 
 				posicion = i;
 			}
 		}
 
 		return posicion;
+	}
+
+	var guardarPelicula = function () {
+
+		var datos = JSON.stringify(peliculas); 
+
+		localStorage.setItem('peliculas', datos);
+
+	}
+
+	var recuperarPelicula = function () {
+
+		var datos = localStorage.getItem('peliculas'); 
+
+		if (datos !== null) {
+
+			peliculas = JSON.parse(datos);
+		}
 	}	
 
-	var agregarPeliculaPrivado = function (pelicula) {
+	var agregarPelicula = function (pelicula) {
 		
 		var posicion = existePelicula(pelicula);
 
@@ -46,9 +62,7 @@ var imdb = (function () {
 				
 				peliculas.push(pelicula);
 
-				localStorage.setItem ('videoteca', peliculas);
-
-				console.log(localStorage.getItem('videoteca');
+				guardarPelicula();
 
 			} else {
 
@@ -56,7 +70,7 @@ var imdb = (function () {
 			}	
 	}
 
-	var eliminarPeliculaPrivado = function (pelicula) {
+	var eliminarPelicula = function (pelicula) {
 		
 		var posicion = existePelicula(pelicula); 
 
@@ -64,9 +78,7 @@ var imdb = (function () {
 
 				peliculas.splice(posicion, 1);
 
-				localStorage.setItem ('videoteca', peliculas);
-
-				console.log(localStorage.getItem('videoteca');			
+				guardarPelicula();		
 
 		} else {
 
@@ -76,7 +88,7 @@ var imdb = (function () {
 
 	var ordenarPeliculaId = function (elementoA, elementoB) {
 
-        var resultado;
+		var resultado;
 
        		if (elementoA.getId() < elementoB.getId()) {
 
@@ -99,9 +111,13 @@ var imdb = (function () {
 		console.log (resultado);
 	}
 
+	recuperarPelicula();
+
 	return {
 
-		agregarPeliculaPublico: agregarPeliculaPrivado
+		agregarPelicula: agregarPelicula,
+		eliminarPelicula: eliminarPelicula,
+		ordenarPeliculaId: ordenarPeliculaId 
 
 	};
 
