@@ -1,4 +1,3 @@
-
 function Pelicula (id, titulo, descripcion, imagen) {
 	
 	this.id = id;
@@ -51,7 +50,7 @@ var Imdb = (function () {
 	// Dibujar en DOM la pelicula pasada como parametro
 	var dibujarPelicula = function (pelicula) {
 
-		var ul = document.getElementById('peliculas');
+		var ul = document.getElementById("peliculas");
 
 		var li = document.createElement('li');
 		var h2 = document.createElement('h2')
@@ -75,7 +74,7 @@ var Imdb = (function () {
 
 	var borrarPeliculaDOM = function (pelicula) {
 
-		var ul = document.getElementById('peliculas');
+		var ul = document.getElementById("peliculas");
 
 		var li = document.getElementById(pelicula.id);
 
@@ -88,7 +87,7 @@ var Imdb = (function () {
 
         for(i = 0; i < peliculas.length && posicion === -1; i++) { 
 
-            if (peliculas[i].id === peliculas.id) { 
+            if (peliculas[i].id === pelicula.id) { 
                 
                 posicion = i; 
             }
@@ -144,7 +143,7 @@ var Imdb = (function () {
 
 		localStorage.removeItem(claveLocalStorage);
 
-		var peliculas = document.getElementById('peliculas');
+		var peliculas = document.getElementById("peliculas");
 
 		while (peliculas.firstChild) {
 
@@ -180,4 +179,3 @@ Imdb.eliminarPelicula(sospechosos)
 /* Borrar array de peliculas, limpiar localStorage y quitar todas las peliculas
 Imdb.limpiarVideoteca()
 */
-
