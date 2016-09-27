@@ -143,11 +143,11 @@ var Imdb = (function () {
 
 		localStorage.removeItem(claveLocalStorage);
 
-		var peliculas = document.getElementById("peliculas");
+		var peliculasDOM = document.getElementById("peliculas");
 
-		while (peliculas.firstChild) {
+		while (peliculasDOM.firstChild) {
 
-			peliculas.removeChild(peliculas.firstChild);
+			peliculasDOM.removeChild(peliculasDOM.firstChild);
 		}
 	}
 
