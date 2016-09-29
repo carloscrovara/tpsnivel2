@@ -75,7 +75,6 @@ var Imdb = (function () {
 	var borrarPeliculaDOM = function (pelicula) {
 
 		var ul = document.getElementById("peliculas");
-
 		var li = document.getElementById(pelicula.id);
 
 		ul.removeChild(li);
@@ -85,16 +84,16 @@ var Imdb = (function () {
 
 		var posicion = -1;
 
-        for(i = 0; i < peliculas.length && posicion === -1; i++) { 
+		for(i = 0; i < peliculas.length && posicion === -1; i++) { 
 
-            if (peliculas[i].id === pelicula.id) { 
+ 			if (peliculas[i].id === pelicula.id) { 
                 
-                posicion = i; 
-            }
+				posicion = i; 
+			}
 
-        }
+		}
 
-        return posicion;
+		return posicion;
 
 	}
 
@@ -102,19 +101,19 @@ var Imdb = (function () {
 
 		var posicion = existePelicula(pelicula); 
 
-        if (posicion === -1) {
+		if (posicion === -1) {
 
-            peliculas.push(pelicula);
+			peliculas.push(pelicula);
 
-            guardarPeliculas();
+			guardarPeliculas();
 
-            dibujarPelicula(pelicula);
+			dibujarPelicula(pelicula);
 
-        }  else {
+		}  else {
 
-            alert('La pelicula con id: ' + pelicula.id + ' ya existe');
+			alert('La pelicula con id: ' + pelicula.id + ' ya existe');
 
-        }
+		}
 
 	}
 
@@ -134,8 +133,8 @@ var Imdb = (function () {
 
             alert('La pelicula con id: ' + pelicula.id + ' no existe');
 
-        }
-    }    
+		}
+	}    
 
 	var limpiarVideoteca = function () {
 
@@ -154,18 +153,16 @@ var Imdb = (function () {
 	// Busca en el array de peliculas la pelicula con el id mas grande y devuelve ese id incrementado en una unidad.	
 	var generarNuevoId = function () {
 
-		// EJERCICIO
-        var maxId = -1;
+		var maxId = -1;
         
-        for (i = 0; i < peliculas.length; i++) { 
+		for (i = 0; i < peliculas.length; i++) { 
 
-            if (peliculas[i].id > maxId) { 
+			if (peliculas[i].id > maxId) { 
                 
-                maxId = peliculas[i].id; 
+				maxId = peliculas[i].id; 
+			}
 
-            }
-
-        }
+		}
 
         return maxId + 1;
 
@@ -173,9 +170,9 @@ var Imdb = (function () {
 
 	var vincularFormulario = function () {
 
-        var botonAgregar = document.getElementById("boton");
+		var botonAgregar = document.getElementById("boton");
         
-        botonAgregar.onclick = crearPelicula;
+		botonAgregar.onclick = crearPelicula;
 
 	}
 
@@ -183,35 +180,34 @@ var Imdb = (function () {
 	// Con esos valores se creara una pelicula y se llamara a agregarPelicula(pelicula)
 	var crearPelicula = function () {
         
-        var elemTitulo = document.getElementById("titulo");
+		var elemTitulo = document.getElementById("titulo");
         
-        var elemDescripcion = document.getElementById("descripcion");
+		var elemDescripcion = document.getElementById("descripcion");
         
-        var elemImagen = document.getElementById("imagen"); 
+		var elemImagen = document.getElementById("imagen"); 
         
-        var pelicula = new Pelicula(generarNuevoId, elemTitulo.value, elemDescripcion.value, elemImagen.value);
+		var pelicula = new Pelicula(generarNuevoId, elemTitulo.value, elemDescripcion.value, elemImagen.value);
         
-        agregarPelicula(pelicula);
+		agregarPelicula(pelicula);
 
 	}	
 
 	// Vincular elementos con funciones para ordenar
 	var vincularOrdenamientos = function () {
 
-        var ordenamientoId = document.getElementById("ordenamiento_id");
+		var ordenamientoId = document.getElementById("ordenamiento_id");
 
-        var ordenamientoAz = document.getElementById("ordenamiento_az");
+		var ordenamientoAz = document.getElementById("ordenamiento_az");
 
-        var ordenamientoZa = document.getElementById("ordenamiento_za");
+		var ordenamientoZa = document.getElementById("ordenamiento_za");
 
-        ordenamientoId.onclick = ordenarPorId; 
+		ordenamientoId.onclick = ordenarPorId; 
 
-        ordenamientoAz.onclick = ordenarAz;
+		ordenamientoAz.onclick = ordenarAz;
 
-        ordenamientoZa.onclick = ordenarZa; 
+		ordenamientoZa.onclick = ordenarZa; 
 
 	}
-
 
     var comparadorId = function (a, b) {
 
