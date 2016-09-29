@@ -192,6 +192,19 @@ var Imdb = (function () {
 
 	}	
 
+	// Se genera la funcion para borrar peliculas del DOM que se usará en las funciones ordenar por ID, AZ y ZA
+	var borrarPeliculasDOM = function () {
+
+		var peliculasDOM = document.getElementById("peliculas");
+	
+		while (peliculasDOM.firstChild) {
+
+			peliculasDOM.removeChild(peliculasDOM.firstChild);
+
+		}
+
+	}
+
 	// Vincular elementos con funciones para ordenar
 	var vincularOrdenamientos = function () {
 
@@ -205,8 +218,8 @@ var Imdb = (function () {
 
 		ordenamientoAz.onclick = ordenarAz;
 
-		ordenamientoZa.onclick = ordenarZa; 
-
+		ordenamientoZa.onclick = ordenarZa;
+		
 	}
 
     var comparadorId = function (a, b) {
@@ -231,6 +244,12 @@ var Imdb = (function () {
     var ordenarPorId = function () {
 
         peliculas.sort(comparadorId);
+
+		borrarPeliculasDOM();
+
+		guardarPeliculas();
+
+		precargarPeliculas();        
 
     }
 
@@ -257,6 +276,12 @@ var Imdb = (function () {
 
         peliculas.sort(comparadorAz);
 
+		borrarPeliculasDOM();
+
+		guardarPeliculas();
+
+		precargarPeliculas();        
+
     }    
 
     var comparadorZa = function (a, b) {
@@ -280,6 +305,12 @@ var Imdb = (function () {
     var ordenarZa = function () {
 
         peliculas.sort(comparadorZa);
+
+		borrarPeliculasDOM();
+
+		guardarPeliculas();
+
+		precargarPeliculas();        
 
     } 
 
