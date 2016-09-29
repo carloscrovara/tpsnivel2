@@ -121,17 +121,17 @@ var Imdb = (function () {
 
 		var posicion = existePelicula(pelicula); 
 
-        if (posicion > -1) {
+		if (posicion > -1) {
 
-            peliculas.splice(posicion, 1);
+			peliculas.splice(posicion, 1);
 
-            guardarPeliculas();
+			guardarPeliculas();
 
-            borrarPeliculaDOM(pelicula);
+			borrarPeliculaDOM(pelicula);
 
-        } else {
+		} else {
 
-            alert('La pelicula con id: ' + pelicula.id + ' no existe');
+			alert('La pelicula con id: ' + pelicula.id + ' no existe');
 
 		}
 	}    
@@ -164,7 +164,7 @@ var Imdb = (function () {
 
 		}
 
-        return maxId + 1;
+		return maxId + 1;
 
 	}	
 
@@ -186,7 +186,7 @@ var Imdb = (function () {
         
 		var elemImagen = document.getElementById("imagen"); 
         
-		var pelicula = new Pelicula(generarNuevoId, elemTitulo.value, elemDescripcion.value, elemImagen.value);
+		var pelicula = new Pelicula(generarNuevoId(), elemTitulo.value, elemDescripcion.value, elemImagen.value);
         
 		agregarPelicula(pelicula);
 
@@ -214,7 +214,6 @@ var Imdb = (function () {
         if (a.id < b.id) {
             
             return -1;
-        
         }
         
         if (a.id === b.id) {
@@ -240,7 +239,6 @@ var Imdb = (function () {
         if (a.titulo < b.titulo) {
             
             return -1;
-        
         }
         
         if (a.titulo === b.titulo) {
