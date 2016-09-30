@@ -319,25 +319,26 @@ var Imdb = (function () {
 
 		var boton = document.getElementById("mostrar_peliculas");
         
-        var contenedorPeliculas = document.getElementById("peliculas");
+		var contenedorPeliculas = document.getElementById("peliculas");
         
 		boton.onclick = function () {
 
-            if (this.value === 'Mostrar Peliculas') {
+			if (this.value === 'Mostrar Peliculas') {
 
-                contenedorPeliculas.setAttribute('style', 'display : auto');
+				contenedorPeliculas.setAttribute('style', 'display : auto');
                 
-                this.value = 'Ocultar Peliculas';
+				this.value = 'Ocultar Peliculas';
 
-            } else {
+			} else {
 
-                contenedorPeliculas.setAttribute('style', 'display : none');
+				contenedorPeliculas.setAttribute('style', 'display : none');
                 
-                this.value = 'Mostrar Peliculas';
+				this.value = 'Mostrar Peliculas';
+			
+			}
 
-            }
-		
 		};
+		
 	}
 	
 	var iniciar = function () {
