@@ -317,11 +317,11 @@ var Imdb = (function () {
 	// Vincular boton de mostrar peliculas con funcion 
 	var vincularBotonListado = function () {
 
-        var boton = document.getElementById("mostrar_peliculas");
+		var boton = document.getElementById("mostrar_peliculas");
         
         var contenedorPeliculas = document.getElementById("peliculas");
         
-        boton.onclick = function () {
+		boton.onclick = function () {
 
             if (this.value === 'Mostrar Peliculas') {
 
@@ -336,18 +336,17 @@ var Imdb = (function () {
                 this.value = 'Mostrar Peliculas';
 
             }
-
-        };
-
-    }
+		
+		};
+	}
 	
-    var iniciar = function () {
+	var iniciar = function () {
 
-        vincularFormulario();
-        vincularOrdenamientos();
-        vincularBotonListado();
-        precargarPeliculas();
-	
+		vincularFormulario();
+		vincularOrdenamientos();
+		vincularBotonListado();
+		precargarPeliculas();
+
 	}
 
 	return {
