@@ -222,30 +222,30 @@ var Imdb = (function () {
 		
 	}
 
-    var comparadorId = function (a, b) {
+	var comparadorId = function (a, b) {
 
-        if (a.id < b.id) {
+		if (a.id < b.id) {
             
-            return -1;
-        }
+			return -1;
+		}
         
-        if (a.id === b.id) {
+		if (a.id === b.id) {
             
-            return 0;
-        }
+			return 0;
+		}
 
-        if (a.id > b.id) {
+		if (a.id > b.id) {
             
-            return 1;
-        }
+			return 1;
+		}
 
-    }
+	}
 
     var ordenarPorId = function () {
 
-        peliculas.sort(comparadorId);
+		peliculas.sort(comparadorId);
 
-		borrarPeliculasDOM();
+		borrarPeliculasDOM(); 
 
 		guardarPeliculas();
 
@@ -274,12 +274,12 @@ var Imdb = (function () {
 
     var ordenarAz = function () {
 
-        peliculas.sort(comparadorAz);
-
+		peliculas.sort(comparadorAz);
+		
 		borrarPeliculasDOM();
 
 		guardarPeliculas();
-
+		
 		precargarPeliculas();        
 
     }    
@@ -304,18 +304,18 @@ var Imdb = (function () {
 
     var ordenarZa = function () {
 
-        peliculas.sort(comparadorZa);
-
+		peliculas.sort(comparadorZa);
+		
 		borrarPeliculasDOM();
-
+		
 		guardarPeliculas();
-
+		
 		precargarPeliculas();        
 
     } 
 
 	// Vincular boton de mostrar peliculas con funcion 
-    var vincularBotonListado = function () {
+	var vincularBotonListado = function () {
 
         var boton = document.getElementById("mostrar_peliculas");
         
@@ -347,7 +347,7 @@ var Imdb = (function () {
         vincularOrdenamientos();
         vincularBotonListado();
         precargarPeliculas();
-
+	
 	}
 
 	return {
