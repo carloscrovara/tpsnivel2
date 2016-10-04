@@ -47,6 +47,52 @@ var Imdb = (function () {
 		return elemento;
 	}
 
+	var cargarPelicula = function (pelicula) {
+
+		var elemTitulo = document.getElementById("titulo");
+        
+		var elemDescripcion = document.getElementById("descripcion");
+        
+		var elemImagen = document.getElementById("imagen"); 
+
+		elemTitulo.value = pelicula.titulo;
+
+		elemDescripcion.value = pelicula.descripcion;
+
+		elemImagen.value = pelicula.imagen;
+
+		var botonAgregar = document.getElementById("boton");
+		
+		botonAgregar.innerHTML = "Modificar";
+		
+		botonAgregar.onclick = function() {
+
+			//Modificar el array
+			var resultado = existePelicula(pelicula);
+			var peliParaModificar = peliculas[resultado];
+			peliParaModificar.titulo = elemTitulo.value;
+			peliParaModificar.descripcion = elemDescripcion.value;
+			peliParaModificar.imagen = elemImagen.value;
+
+			//Modificar la pagina
+			//obtener los objetos del dom del h2, el p y la img (con el id)
+			var peliculaTitulo = document.getElementById('h2-' + pelicula.id);
+			var peliculaDescripcion = document.getElementById('p-'+ pelicula.id);
+			var peliculaImagen = document.getElementById('img-' + pelicula.id);
+			//cambiar el innerhtml / atributo src de cada objeto con el valor ingresado en el formulario
+			peliculaTitulo.innerHTML = elemTitulo.value; 
+			peliculaDescripcion.innerHTML = elemDescripcion.value;
+			peliculaImagen.setAttribute("src", elemImagen.value);
+
+			//Modificar local storage
+			guardarPeliculas();
+
+			vincularFormulario();
+			botonAgregar.innerHTML = "Agregar";	
+		}					
+
+	}
+
 	// Dibujar en DOM la pelicula pasada como parametro
 	var dibujarPelicula = function (pelicula) {
 
@@ -56,18 +102,48 @@ var Imdb = (function () {
 		var h2 = document.createElement('h2')
 		var p = document.createElement('p');
 		var img = document.createElement('img');
+		var botonBorrar = document.createElement('button');
+		var botonEditar = document.createElement('button');
 
 		li.setAttribute('id', pelicula.id);
 		li.setAttribute('class', 'list-group-item');
 
 		h2 = agregarTexto(h2, pelicula.titulo);
 		p = agregarTexto(p, pelicula.descripcion);
+		botonBorrar = agregarTexto(botonBorrar, 'Borrar');
+		botonEditar = agregarTexto(botonEditar, 'Editar');
 
 		img.setAttribute('src', pelicula.imagen);
+
+		h2.setAttribute('id', 'h2-' + pelicula.id);
+		p.setAttribute('id', 'p-' + pelicula.id);
+		img.setAttribute('id', 'img-' + pelicula.id)
+
+		botonBorrar.setAttribute('id', "botonborrar-" + pelicula.id);
+		botonBorrar.setAttribute('type', 'button');
+		botonBorrar.setAttribute('class', 'btn btn-primary');
+		
+		botonBorrar.onclick = function () {
+
+			eliminarPelicula(pelicula);
+
+		};
+
+		botonEditar.setAttribute('id', "botoneditar-" + pelicula.id);
+		botonEditar.setAttribute('type', 'button');
+		botonEditar.setAttribute('class', 'btn btn-primary');
+
+		botonEditar.onclick = function () {
+
+			cargarPelicula(pelicula);
+
+		}
 
 		li.appendChild(h2);
 		li.appendChild(p);
 		li.appendChild(img);
+		li.appendChild(botonBorrar);
+		li.appendChild(botonEditar);
 
 		ul.appendChild(li);
 	}
@@ -187,7 +263,7 @@ var Imdb = (function () {
 		var elemImagen = document.getElementById("imagen"); 
         
 		var pelicula = new Pelicula(generarNuevoId(), elemTitulo.value, elemDescripcion.value, elemImagen.value);
-        
+
 		agregarPelicula(pelicula);
 
 	}	
