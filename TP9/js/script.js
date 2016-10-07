@@ -52,12 +52,9 @@ var Diario = (function () {
 	 */
     var agregarTexto = function (elemento, texto) {
 
-        // var nodoTexto = document.createTextNode(texto);
-        // elemento.appendChild(nodoTexto);
-
-		var nodoTexto = $(document.createTextNode(texto));
-
-        elemento.appendTo(nodoTexto);
+        var nodoTexto = document.createTextNode(texto);
+        
+        elemento.appendChild(nodoTexto);
 
         return elemento;
 
@@ -83,9 +80,9 @@ var Diario = (function () {
     	noticiaDOM.childNodes[POSICION_IMAGEN].setAttribute('src', noticia.imagen);
     	*/
 
-    	$('#' + id + ' ' + 'h3'.html(noticia.titulo);
+    	$('#' + id + ' ' + 'h3').html(noticia.titulo);
     	$('#' + id + ' ' + 'p').html(noticia.descripcion);
-    	$('#') +  id + ' ' + 'img').attr(src, noticia.imagen);	
+    	$('#' +  id + ' ' + 'img').attr(src, noticia.imagen);	
 
     	guardarNoticias();
 
@@ -98,7 +95,7 @@ var Diario = (function () {
 		// var boton = document.getElementById('boton');
     	// boton.innerHTML = 'Agregar';
     	// boton.onclick = crearNoticia;    			
-		$('boton').html('Agregar').on('click', crearNoticia);
+		var boton = $('#boton').html('Agregar').on('click', crearNoticia);
     	
 		/* 
 		document.getElementById('titulo').value = '';
@@ -124,10 +121,11 @@ var Diario = (function () {
 	   	
 		// var boton = document.getElementById('boton');
 	   	//boton.innerHTML = 'Modificar'		
-		var boton = $('boton').html('Modificar');
+		var boton = $('#boton').html('Modificar');
 	   	
 		// boton.onclick = function ()
-		boton.on('click', function {
+		boton.off('click');		
+		boton.on('click', function () {
 
 			/*
 			noticia.titulo = document.getElementById("titulo").value;
@@ -247,7 +245,7 @@ var Diario = (function () {
         // var ul = document.getElementById("noticias");
         // var li = document.getElementById(id);
         // ul.removeChild(li);        
-        $('# + id').remove();
+        $('#' + id).remove();
 
     }
 
@@ -401,11 +399,9 @@ var Diario = (function () {
 	
 	var mostrarOcultarListado = function () {
 	
-		// var listado = document.getElementById('noticias');
-		var listado = $('#noticias');		
+		var listado = document.getElementById('noticias');	
 		
-		//var ordenadores = document.getElementById('ordenadores');
-		var ordenadores = $('#ordenadores');		
+		var ordenadores = document.getElementById('ordenadores');	
 		
 		if (listado.className == '') {
 
@@ -450,7 +446,7 @@ var Diario = (function () {
 
 		// var boton = document.getElementById('boton');
 		// boton.onclick = crearNoticia;		
-		$('#boton').on('click', crearNoticia);
+		var boton = $('#boton').on('click', crearNoticia);
 
 	}
 	
@@ -474,7 +470,7 @@ var Diario = (function () {
 
 		}*/
 
-		ordenarPorId.on('click', function {
+		ordenarPorId.on('click', function() {
 
 			var atributo = 'id';
 			
@@ -493,7 +489,7 @@ var Diario = (function () {
 
 		}*/
 
-		ordenarPorAZ.on('click', function {
+		ordenarPorAZ.on('click', function() {
 
 			var atributo = 'titulo';
 			
@@ -513,7 +509,7 @@ var Diario = (function () {
 
 		}*/
 
-		ordenarPorZA.on('click', function {
+		ordenarPorZA.on('click', function() {
 
 			var atributo = 'titulo';
 			
