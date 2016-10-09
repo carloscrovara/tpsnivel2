@@ -68,10 +68,8 @@ var Diario = (function () {
 
     	var posicion = obtenerPosicionNoticia(noticia.id);
     	
-    	//var noticiaDOM = document.getElementById(noticia.id);
-    	var noticiaDOM = $(noticia.id);
-
     	/*
+    	var noticiaDOM = document.getElementById(noticia.id);    	
     	noticias[posicion].titulo = noticia.titulo;
     	noticias[posicion].descripcion = noticia.descripcion;
     	noticias[posicion].imagen = noticia.imagen;
@@ -80,9 +78,9 @@ var Diario = (function () {
     	noticiaDOM.childNodes[POSICION_IMAGEN].setAttribute('src', noticia.imagen);
     	*/
 
-    	$('#' + id + ' ' + 'h3').html(noticia.titulo);
-    	$('#' + id + ' ' + 'p').html(noticia.descripcion);
-    	$('#' +  id + ' ' + 'img').attr(src, noticia.imagen);	
+    	$('#' + noticia.id + ' ' + 'h3').html(noticia.titulo);
+    	$('#' + noticia.id + ' ' + 'p').html(noticia.descripcion);
+    	$('#' + noticia.id + ' ' + 'img').attr(src, noticia.imagen);	
 
     	guardarNoticias();
 
@@ -95,7 +93,7 @@ var Diario = (function () {
 		// var boton = document.getElementById('boton');
     	// boton.innerHTML = 'Agregar';
     	// boton.onclick = crearNoticia;    			
-		var boton = $('#boton').html('Agregar').on('click', crearNoticia);
+		$('#boton').html('Agregar').on('click', function () { crearNoticia(); } );
     	
 		/* 
 		document.getElementById('titulo').value = '';
@@ -399,7 +397,7 @@ var Diario = (function () {
 	
 	var mostrarOcultarListado = function () {
 	
-		var listado = document.getElementById('noticias');	
+		/* var listado = document.getElementById('noticias');	
 		
 		var ordenadores = document.getElementById('ordenadores');	
 		
@@ -419,7 +417,24 @@ var Diario = (function () {
 			
 			this.textContent = 'Ocultar Noticias';
 
+		}*/ 
+
+		$('#noticias').toggle(
+
+		function () {
+
+			if ($('#mostrarOcultarListado').text() === 'Ocultar Noticias') {
+
+				$('#mostrarOcultarListado').text('Mostrar Noticias');
+
+			} else {
+
+				$('#mostrarOcultarListado').text('Ocultar Noticias');
+			}
+
 		}
+
+	);
 		
 	}
 
@@ -446,7 +461,7 @@ var Diario = (function () {
 
 		// var boton = document.getElementById('boton');
 		// boton.onclick = crearNoticia;		
-		var boton = $('#boton').on('click', crearNoticia);
+		$('#boton').on('click', function () { crearNoticia(); } );
 
 	}
 	
@@ -525,7 +540,7 @@ var Diario = (function () {
 
 		// var boton = document.getElementById('mostrarOcultarListado');
 		//boton.onclick = mostrarOcultarListado;
-		$('#mostrarOcultarListado').on('click', mostrarOcultarListado);
+		$('#mostrarOcultarListado').on('click', function () { mostrarOcultarListado(); } );
 
 	}
 	
