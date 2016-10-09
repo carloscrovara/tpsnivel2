@@ -80,7 +80,7 @@ var Diario = (function () {
 
     	$('#' + noticia.id + ' ' + 'h3').html(noticia.titulo);
     	$('#' + noticia.id + ' ' + 'p').html(noticia.descripcion);
-    	$('#' + noticia.id + ' ' + 'img').attr(src, noticia.imagen);	
+    	$('#' + noticia.id + ' ' + 'img').attr('src', noticia.imagen);	
 
     	guardarNoticias();
 
