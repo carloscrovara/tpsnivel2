@@ -93,7 +93,7 @@ var Diario = (function () {
 		// var boton = document.getElementById('boton');
     	// boton.innerHTML = 'Agregar';
     	// boton.onclick = crearNoticia;    			
-		$('#boton').html('Agregar').on('click', function () { crearNoticia(); } );
+		$('#boton').html('Agregar').off('click').on('click', function () { crearNoticia(); } );
     	
 		/* 
 		document.getElementById('titulo').value = '';
