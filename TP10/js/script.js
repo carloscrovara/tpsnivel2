@@ -233,7 +233,7 @@ var Diario = (function () {
 
 		 // Cada noticia tiene que tener un checkbox para seleccionar si se va a borrar o no
 		 $('<input/>')
-			.addClass('checkbox')		 
+			.addClass('checkbox')					 
 		 	.attr('type', 'checkbox')
 		 	.attr('value','')
 		 	.html('Eliminar noticia')
@@ -559,7 +559,9 @@ var Diario = (function () {
 
 	// vincular el evento change al select de categorias que tiene como id filtro Categoria
 	var mostrarCategorias = function () {
+		
 		$('#filtroCategoria').on('change', function() {
+			
 			var categoria = $('#filtroCategoria').val();
 
 			// Recorrer el array de noticias verificando que noticias[i].categoria === categoria
@@ -586,42 +588,36 @@ var Diario = (function () {
 
 	// vincular el evento keyup al input que tiene como id buscador Noticias
 	var mostrarTitulo = function () {
-		$('#buscadorNoticias').on('keyup', function() {
-                    var tituloNoticia = $('#buscadorNoticias').val();
-
-                    for (i = 0; i < noticias.length; i++) {
-
-						if (noticias[i].titulo === tituloNoticia) {
-
-							$('#' + noticias[i].id).show();
-
-						} else {
-
-							$('#' + noticias[i].id).hide();
-
-						}
-
-					}
 		
+		$('#buscadorNoticias').keyup(function() {
+                    
+                    var tituloNoticia = $(this).val().toLowerCase();
+
+                    $('#noticias li').hide();
+
+                    $('#noticias li').each(function() {
+                    	
+                    	var text = $(this).text().toLowerCase();
+
+                    	if(text.indexOf(tituloNoticia) != -1) {
+                    		
+                    		$(this).show();
+                    	}
+                    });
 		});
 
 	}
 
-	/*var borradoMultipleNoticias = function (id) {
+	var borradoMultipleNoticias = function (id) {
 
-        var noticiasSeleccionadas = $('#noticias li input[type="checkbox"]:checked');
-
-		noticias.splice(noticiasSeleccionadas);
-
-		guardarNoticias();
-
-		borrarNoticiaDOM(id);
-	}*/	
+		$('#noticias li input[type="checkbox"]:checked').remove();
+	}
 
 	//  Deben vincular el evento click del boton con id borrarSeleccionados con una funcion que borre las noticias seleccionadas. Puede usar la funcion trigger	
-	/*var vincularBorradoMultiple = function () {
+	var vincularBotonBorradoMultiple = function () {
+		
 		$('#borrarSeleccionados').on('click', function() { borradoMultipleNoticias(); });
-	}*/
+	}
 
 	var iniciar = function () {
 		mostrarCategorias();
@@ -629,7 +625,7 @@ var Diario = (function () {
 		vincularFormulario();
 		vincularOrdenamientos();
 		vincularBotonListado();
-		//vincularBorradoMultiple();
+		vincularBotonBorradoMultiple();
 		precargarNoticias();
 
 	}
