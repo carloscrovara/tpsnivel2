@@ -230,6 +230,15 @@ var Diario = (function () {
 		botonEliminar.appendTo('#' + noticia.id);
 		botonModificar.appendTo('#' + noticia.id);
 
+
+		 // Cada noticia tiene que tener un checkbox para seleccionar si se va a borrar o no
+		 $('<input/>')
+			.addClass('checkbox')		 
+		 	.attr('type', 'checkbox')
+		 	.attr('value','')
+		 	.html('Eliminar noticia')
+		 	.appendTo('#' + noticia.id);
+
 		 $('<h3/>').html(noticia.titulo).appendTo('#' + noticia.id);
 		 $('<p/>').html(noticia.descripcion).appendTo('#' + noticia.id);
 		 $('<img/>').attr('src', noticia.imagen).appendTo('#' + noticia.id);
@@ -576,22 +585,51 @@ var Diario = (function () {
 	}
 
 	// vincular el evento keyup al input que tiene como id buscador Noticias
-	/*var mostrarTitulos = function () {
-		$('#buscadorNoticias').on( , function() {
-			
-		})
+	var mostrarTitulo = function () {
+		$('#buscadorNoticias').on('keyup', function() {
+                    var tituloNoticia = $('#buscadorNoticias').val();
 
+                    for (i = 0; i < noticias.length; i++) {
+
+						if (noticias[i].titulo === tituloNoticia) {
+
+							$('#' + noticias[i].id).show();
+
+						} else {
+
+							$('#' + noticias[i].id).hide();
+
+						}
+
+					}
+		
+		});
+
+	}
+
+	/*var borradoMultipleNoticias = function (id) {
+
+        var noticiasSeleccionadas = $('#noticias li input[type="checkbox"]:checked');
+
+		noticias.splice(noticiasSeleccionadas);
+
+		guardarNoticias();
+
+		borrarNoticiaDOM(id);
+	}*/	
+
+	//  Deben vincular el evento click del boton con id borrarSeleccionados con una funcion que borre las noticias seleccionadas. Puede usar la funcion trigger	
+	/*var vincularBorradoMultiple = function () {
+		$('#borrarSeleccionados').on('click', function() { borradoMultipleNoticias(); });
 	}*/
 
-	// Cada noticia tiene que tener un checkbox para seleccionar si se va a borrar o no
-	//  Deben vincular el evento click del boton con id borrarSeleccionados con una funcion que borre las noticias seleccionadas. Puede usar la funcion trigger	
-	
 	var iniciar = function () {
 		mostrarCategorias();
-		//mostrarTitulos();
+		mostrarTitulo();
 		vincularFormulario();
 		vincularOrdenamientos();
 		vincularBotonListado();
+		//vincularBorradoMultiple();
 		precargarNoticias();
 
 	}
