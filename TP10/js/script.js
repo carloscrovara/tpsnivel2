@@ -230,7 +230,6 @@ var Diario = (function () {
 		botonEliminar.appendTo('#' + noticia.id);
 		botonModificar.appendTo('#' + noticia.id);
 
-
 		 // Cada noticia tiene que tener un checkbox para seleccionar si se va a borrar o no
 		 $('<input/>')
 			.addClass('checkbox')					 
@@ -586,7 +585,7 @@ var Diario = (function () {
 		});
 	}
 
-	// vincular el evento keyup al input que tiene como id buscador Noticias
+	// Vincular el evento keyup al input que tiene como id buscador Noticias
 	var mostrarTitulo = function () {
 		
 		$('#buscadorNoticias').keyup(function() {
@@ -608,9 +607,16 @@ var Diario = (function () {
 
 	}
 
-	var borradoMultipleNoticias = function (id) {
+	var borradoMultipleNoticias = function () {
 
-		$('#noticias li input[type="checkbox"]:checked').remove();
+			var noticiasSeleccionadas = $('#noticias li input[type="checkbox"]');
+
+			if(noticiasSeleccionadas.checked) {
+			
+				eliminarNoticia(noticia.id);
+
+			}
+
 	}
 
 	//  Deben vincular el evento click del boton con id borrarSeleccionados con una funcion que borre las noticias seleccionadas. Puede usar la funcion trigger	
