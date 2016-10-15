@@ -211,7 +211,7 @@ var Diario = (function () {
 			.appendTo('#noticias');
 
 		var botonEliminar = $('<button/>')
-									.addClass('btn btn-default btn-xs')
+									.addClass('btn btn-default btn-xs boton-borrar')
 									.on('click', function () { eliminarNoticia(noticia.id); });
 		var botonModificar = $('<button/>')
 									.addClass('btn btn-default btn-xs')
@@ -609,13 +609,7 @@ var Diario = (function () {
 
 	var borradoMultipleNoticias = function () {
 
-			var noticiasSeleccionadas = $('#noticias li input[type="checkbox"]');
-
-			if(noticiasSeleccionadas.checked) {
-			
-				eliminarNoticia(noticia.id);
-
-			}
+		$('#noticias li input[type="checkbox"]:checked').closest('li').find('.boton-borrar').trigger('click');
 
 	}
 
