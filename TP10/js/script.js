@@ -141,6 +141,8 @@ var Diario = (function () {
 
 	   		modificarNoticia(noticia);
 
+	   		mostrarCategorias();
+
 		})
 	}	
 
@@ -239,14 +241,24 @@ var Diario = (function () {
 			.addClass('checkbox')					 
 		 	.attr('type', 'checkbox')
 		 	.attr('value','')
-		 	.html('Eliminar noticia')
 		 	.appendTo('#' + noticia.id);
 
+		 $('<span/>')
+		  	.html('Eliminar noticia')
+		  	.appendTo('#' + noticia.id);
+		 	
 		 $('<h3/>').html(noticia.titulo).appendTo('#' + noticia.id);
 		 $('<p/>').html(noticia.descripcion).appendTo('#' + noticia.id);
 		 $('<img/>').attr('src', noticia.imagen).appendTo('#' + noticia.id);
 		 $('<h4/>').html(noticia.categoria).appendTo('#' + noticia.id);
 
+			var categoria = $('#filtroCategoria').val();
+
+				if (noticias[i].categoria != categoria || categoria != 'Todas') {
+
+					$('#' + noticias[i].id).hide();
+
+				} 
 	}
 
     /*
@@ -600,7 +612,7 @@ var Diario = (function () {
 
                     $('#noticias li').each(function() {
                     	
-                    	var text = $(this).text().toLowerCase();
+                    	var text = $(this).find('h3').text().toLowerCase();
 
                     	if(text.indexOf(tituloNoticia) != -1) {
                     		
