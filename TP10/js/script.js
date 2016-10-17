@@ -82,6 +82,7 @@ var Diario = (function () {
     	$('#' + noticia.id + ' ' + 'h3').html(noticia.titulo);
     	$('#' + noticia.id + ' ' + 'p').html(noticia.descripcion);
     	$('#' + noticia.id + ' ' + 'img').attr('src', noticia.imagen);	
+    	$('#' + noticia.id + ' ' + 'h4').html(noticia.categoria);
 
     	guardarNoticias();
 
@@ -103,7 +104,8 @@ var Diario = (function () {
 		*/
     	$('#titulo').val('');
     	$('#descripcion').val('');
-    	$('#imagen').val('');		
+    	$('#imagen').val('');
+    	$('#categoria').val('');		
 
     }
 
@@ -116,7 +118,8 @@ var Diario = (function () {
 	   	*/
 	   	$('#titulo').val(noticia.titulo);
 	   	$('#descripcion').val(noticia.descripcion);
-	   	$('#imagen').val(noticia.imagen);	   	
+	   	$('#imagen').val(noticia.imagen);	
+	   	$('#categoria').val(noticia.categoria);   	
 	   	
 		// var boton = document.getElementById('boton');
 	   	//boton.innerHTML = 'Modificar'		
@@ -134,6 +137,7 @@ var Diario = (function () {
 			noticia.titulo = $('#titulo').val();
 			noticia.descripcion = $('#descripcion').val();
 			noticia.imagen = $('#imagen').val();
+			noticia.categoria = $('#categoria').val();
 
 	   		modificarNoticia(noticia);
 
