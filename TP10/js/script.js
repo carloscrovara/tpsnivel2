@@ -252,13 +252,13 @@ var Diario = (function () {
 		 $('<img/>').attr('src', noticia.imagen).appendTo('#' + noticia.id);
 		 $('<h4/>').html(noticia.categoria).appendTo('#' + noticia.id);
 
-			var categoria = $('#filtroCategoria').val();
+		 var categoria = $('#filtroCategoria').val();
 
-				if (noticias[i].categoria != categoria || categoria != 'Todas') {
+			if (noticia.categoria != categoria && categoria != 'Todas') {
 
-					$('#' + noticias[i].id).hide();
+					$('#' + noticia.id).fadeOut(1000);
 
-				} 
+			} 
 	}
 
     /*
