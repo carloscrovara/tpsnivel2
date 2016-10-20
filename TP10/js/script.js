@@ -237,15 +237,11 @@ var Diario = (function () {
 		botonModificar.appendTo('#' + noticia.id);
 
 		 // Cada noticia tiene que tener un checkbox para seleccionar si se va a borrar o no
-		 $('<input/>')
-			.addClass('checkbox')					 
-		 	.attr('type', 'checkbox')
-		 	.attr('value','')
-		 	.appendTo('#' + noticia.id);
-
-		 $('<span/>')
-		  	.html('Eliminar noticia')
-		  	.appendTo('#' + noticia.id);
+		var divBorrar = $('<div/>').addClass("checkbox").appendTo('#' + noticia.id);
+    	
+    	var label = $('<label/>').html("Marcar para borrar").appendTo(divBorrar);
+    	
+    	$('<input/>').attr('type', 'checkbox').prependTo(label);
 		 	
 		 $('<h3/>').html(noticia.titulo).appendTo('#' + noticia.id);
 		 $('<p/>').html(noticia.descripcion).appendTo('#' + noticia.id);
