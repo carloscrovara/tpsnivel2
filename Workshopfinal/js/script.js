@@ -1,8 +1,9 @@
-function Artista(id, nombre, imagen) {
+function Artista(id, nombre, imagen, album) {
 
     this.id = id;
     this.nombre = nombre;
     this.imagen = imagen;
+    this.album = album;
 
 }
 
@@ -13,16 +14,22 @@ var Spotify = (function () {
 
 	var claveLocalStorage = 'artistas';
 
-  // Permite precargar los artistas por localstorage
-  var precargarArtistas = function () {
+  // Permite precargar los artistas favoritos por localstorage
+  var precargarFavoritos = function () {
 		
         var datos = localStorage.getItem(claveLocalStorage);
 
         if (datos !== null && datos !== '') {
 
-            artistas = JSON.parse(datos);	
+            artistas = JSON.parse(datos);
 
-		}
+              for (i = 0; i < artistas.length; i++) {
+        
+                dibujarFavoritos(artistas[i]);
+
+              }        	
+
+		    }
 
 	}
 
@@ -47,17 +54,19 @@ var Spotify = (function () {
 
         var nombre = datos.artists.items[i].name;
 
-        var imagen = ""; 
+        var imagen = ''; 
 
         if (datos.artists.items[i].images.length > 0) {
 
           imagen = datos.artists.items[i].images[0].url;
 
         }
-      
-        var artista = new Artista(id, nombre, imagen);
 
-        agregarArtista(artista);
+        var album = '';
+      
+        var artista = new Artista(id, nombre, imagen, album);
+
+        dibujarArtista(artista);
 
       }  
 
@@ -82,21 +91,21 @@ var Spotify = (function () {
 	// Dibuja en el DOM resultados de buscar artistas	
   var dibujarArtista = function (artista) {
 
-    	var contenedor = $("#resultadoArtistas")
+    	var contenedor = $('#resultadoArtistas');
 
     	$('<li/>')
       		.attr('id', artista.id)
       		.addClass('list-group-item')
       		.appendTo(contenedor);
 
-      	$('<img/>').attr('src', artista.imagen).css("max-width", "400px").appendTo('#' + artista.id);
+      	$('<img/>').attr('src', artista.imagen).css('max-width', '400px').appendTo('#' + artista.id);
       	$('<h3/>').html(artista.nombre).appendTo('#' + artista.id);
       	$('<span/>').addClass('glyphicon glyphicon-star-empty')
             .on('click', function(){
 
               $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
 
-              agregarFavoritos(artista);
+              agregarFavoritos(artista);        
 
             })
             .appendTo('#' + artista.id);
@@ -106,14 +115,14 @@ var Spotify = (function () {
   // Dibuja en el DOM los favoritos 
   var dibujarFavoritos = function (artista) {
 
-      var contenedor = $("#resultadoFavoritos")
+      var contenedor = $('#resultadoFavoritos');
 
       $('<li/>')
-          .attr('id', artista.id)
-          .addClass('list-group-item')
-          .appendTo(contenedor);
+            .attr('id', artista.id)
+            .addClass('list-group-item')
+            .appendTo(contenedor);
 
-        $('<img/>').attr('src', artista.imagen).css("max-width", "400px").appendTo('#' + artista.id);
+        $('<img/>').attr('src', artista.imagen).css('max-width', '400px').appendTo('#' + artista.id);
         $('<h3/>').html(artista.nombre).appendTo('#' + artista.id);
         $('<span/>').addClass('glyphicon glyphicon-remove')
             .on('click', function(){
@@ -123,16 +132,22 @@ var Spotify = (function () {
             })
             .appendTo('#' + artista.id);
         
-        $('<a/>').attr('src', 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&').html('Ver álbumes');          
+        $('<a/>')
+            .attr('href', 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&market=AR')
+            .html('Ver álbumes')
+            .appendTo('#' + artista.id);     
+
   }
 
   var agregarFavoritos = function (artista) {  
 
-      //Guardar en local storage
+      artistas.push(artista);
+
+      guardarArtistas();
 
   } 	
 
-  var agregarArtista = function (artista) {
+  /* var agregarArtista = function (artista) {
 
 		artistas.push(artista);
 
@@ -140,7 +155,47 @@ var Spotify = (function () {
 
 		dibujarArtista(artista);
 		
-  }
+  }*/
+
+  // Buscar albumes de artista seleccionado en api Spotify 
+  /*var buscarAlbumes = function () {
+    
+    var albumArtista = 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&market=AR';
+
+    $.ajax({
+  
+      url: albumArtista,
+      crossDomain: true,
+      dataType: "json"
+
+    }).done(function (datos) { // el parametro datos es lo que se recibe desde el servidor
+
+      // Se ejecutara esta seccion si todo salio bien
+      // Iterar sobre array
+      for (i = 0; i < datos.artists.items.length; i++) {
+
+        var id = datos.artists.items[i].id;
+
+        var nombre = "";
+
+        var imagen = "";
+
+        var album = datos.artists.name[i].id 
+
+        var artista = new Artista(id, nombre, imagen, album);
+
+        agregarArtista(artista);
+
+      }  
+
+    }).fail(function (jqXHR, textStatus) {
+
+      // Se ejecutara esta seccion si hubo algun problema
+      console.error("ocurrio un error inesperado...");
+
+    });
+
+  }*/ 
 
   var obtenerPosicionArtista = function (id) {
 
@@ -203,21 +258,64 @@ var Spotify = (function () {
 
   }
 
-  var vincularPestaniaFavoritos = function () {
+  // Activar pestania favoritos
+  var cambiarPestaniaFavoritos = function () {
 
-    $('#pestaniaFavoritos').on('click', dibujarFavoritos);
-  
+    $('#tab-buscador').removeClass('active');
+
+    $('#tab-favoritos').addClass('active');    
+
   }
+
+  // Activar pestania buscador 
+  var cambiarPestaniaBuscador = function () {
+
+    $('#tab-favoritos').removeClass('active');  
+
+    $('#tab-buscador').addClass('active');
+
+  } 
+
+  // Vincular pestanias con eventos on click
+  var vincularPestanias = function () {
+
+    $('#linkBuscador')
+      .attr('href', '#pestaniaBuscador')
+      .on('click', function(){
+
+            cambiarPestaniaBuscador();
+
+            $('#pestaniaBuscador').removeClass('hidden')
+
+            $('#pestaniaFavoritos').addClass('hidden')
+      })
+
     
+    $('#linkFavoritos')
+        .attr('href', '#pestaniaFavoritos')
+        .on('click', function(){
+
+            cambiarPestaniaFavoritos();
+
+            $('#pestaniaFavoritos').removeClass('hidden')
+
+            $('#pestaniaBuscador').addClass('hidden')
+
+        })  
+
+  }
+
 	var iniciar = function () {
 		
-		precargarArtistas();
+    precargarFavoritos();
 		vincularBotonBuscar();
-	}
+    vincularPestanias();
+	
+  }
   
   return {
 
-  		limpiarSpotify: limpiarSpotify,
+  	limpiarSpotify: limpiarSpotify,
 		iniciar: iniciar
 
   };
