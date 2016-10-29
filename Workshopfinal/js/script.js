@@ -157,12 +157,12 @@ var Spotify = (function () {
 
   // Buscar albumes de artista seleccionado en api Spotify 
   var buscarAlbumes = function () {
-    
-    var ArtistaId = //Buscar Id de artista
+  
+    var artistaId = $('#resultadoFavoritos li').attr('id');               
 
     $.ajax({
   
-      url: 'https://api.spotify.com/v1/artists/' + ArtistaId + '/albums?album_type=album&market=AR',
+      url: 'https://api.spotify.com/v1/artists/' + artistaId + '/albums?album_type=album&market=AR',
       crossDomain: true,
       dataType: "json"
 
