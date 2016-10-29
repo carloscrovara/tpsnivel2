@@ -40,7 +40,7 @@ var Spotify = (function () {
 
     $.ajax({
   
-      url:"https://api.spotify.com/v1/search?type=artist&q=" + nombreArtista,
+      url:'https://api.spotify.com/v1/search?type=artist&q=' + nombreArtista,
       crossDomain: true,
       dataType: "json"
 
@@ -133,8 +133,16 @@ var Spotify = (function () {
             .appendTo('#' + artista.id);
         
         $('<a/>')
-            .attr('href', 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&market=AR')
-            .html('Ver álbumes')
+            .attr('id', artista.id)
+            .html('Ver álbumes')             
+            .on('click', function(){
+
+              buscarAlbumes();
+
+              dibujarAlbum(artista);        
+
+            })
+
             .appendTo('#' + artista.id);     
 
   }
@@ -147,24 +155,14 @@ var Spotify = (function () {
 
   } 	
 
-  /* var agregarArtista = function (artista) {
-
-		artistas.push(artista);
-
-		guardarArtistas();
-
-		dibujarArtista(artista);
-		
-  }*/
-
   // Buscar albumes de artista seleccionado en api Spotify 
-  /*var buscarAlbumes = function () {
+  var buscarAlbumes = function () {
     
-    var albumArtista = 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&market=AR';
+    var ArtistaId = //Buscar Id de artista
 
     $.ajax({
   
-      url: albumArtista,
+      url: 'https://api.spotify.com/v1/artists/' + ArtistaId + '/albums?album_type=album&market=AR',
       crossDomain: true,
       dataType: "json"
 
@@ -172,19 +170,17 @@ var Spotify = (function () {
 
       // Se ejecutara esta seccion si todo salio bien
       // Iterar sobre array
-      for (i = 0; i < datos.artists.items.length; i++) {
+      for (i = 0; i < datos.items.artists.length; i++) {
 
-        var id = datos.artists.items[i].id;
+        var id = datos.items.artists[i].id;
 
-        var nombre = "";
+        var nombre = '';
 
-        var imagen = "";
+        var imagen = '';
 
-        var album = datos.artists.name[i].id 
+        var album = datos.items.artists[i].id 
 
         var artista = new Artista(id, nombre, imagen, album);
-
-        agregarArtista(artista);
 
       }  
 
@@ -195,7 +191,21 @@ var Spotify = (function () {
 
     });
 
-  }*/ 
+  }
+
+  // Dibuja en el DOM albumes de artistas 
+  var dibujarAlbum = function (artista) {
+
+      var contenedor = $('#resultadoFavoritos').find('a'+ '#' + artista.id)//Buscar vinculo con id artista 
+
+      $('<li/>')
+          .attr('id', artista.id)
+          .addClass('list-group-item')
+          .appendTo(contenedor);
+
+        $('<a/>').attr('href', '').html(artista.album).appendTo('#' + artista.id);
+
+  }
 
   var obtenerPosicionArtista = function (id) {
 
