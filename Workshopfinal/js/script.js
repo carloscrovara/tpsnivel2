@@ -1,9 +1,8 @@
-function Artista(id, nombre, imagen, album) {
+function Artista(id, nombre, imagen) {
 
     this.id = id;
     this.nombre = nombre;
     this.imagen = imagen;
-    this.album = album;
 
 }
 
@@ -61,10 +60,8 @@ var Spotify = (function () {
           imagen = datos.artists.items[i].images[0].url;
 
         }
-
-        var album = '';
       
-        var artista = new Artista(id, nombre, imagen, album);
+        var artista = new Artista(id, nombre, imagen);
 
         dibujarArtista(artista);
 
@@ -137,9 +134,7 @@ var Spotify = (function () {
             .html('Ver álbumes')             
             .on('click', function(){
 
-              buscarAlbumes();
-
-              dibujarAlbum(artista);        
+              buscarAlbumes(artista);       
 
             })
 
@@ -156,13 +151,11 @@ var Spotify = (function () {
   } 	
 
   // Buscar albumes de artista seleccionado en api Spotify 
-  var buscarAlbumes = function () {
-  
-    var artistaId = $('#resultadoFavoritos li').attr('id');               
-
+  var buscarAlbumes = function (artista) {
+               
     $.ajax({
   
-      url: 'https://api.spotify.com/v1/artists/' + artistaId + '/albums?album_type=album&market=AR',
+      url: 'https://api.spotify.com/v1/artists/' + artista.id + '/albums?album_type=album&market=AR',
       crossDomain: true,
       dataType: "json"
 
@@ -170,17 +163,11 @@ var Spotify = (function () {
 
       // Se ejecutara esta seccion si todo salio bien
       // Iterar sobre array
-      for (i = 0; i < datos.items.artists.length; i++) {
+      for (i = 0; i < datos.items.length; i++) {
 
-        var id = datos.items.artists[i].id;
+        var album = {id: datos.items[i].id, nombre: datos.items[i].name}
 
-        var nombre = '';
-
-        var imagen = '';
-
-        var album = datos.items.artists[i].id 
-
-        var artista = new Artista(id, nombre, imagen, album);
+        dibujarAlbum(artista, album); 
 
       }  
 
@@ -194,16 +181,11 @@ var Spotify = (function () {
   }
 
   // Dibuja en el DOM albumes de artistas 
-  var dibujarAlbum = function (artista) {
+  var dibujarAlbum = function (artista, album) {
 
-      var contenedor = $('#resultadoFavoritos').find('a'+ '#' + artista.id)//Buscar vinculo con id artista 
+      var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id);
 
-      $('<li/>')
-          .attr('id', artista.id)
-          .addClass('list-group-item')
-          .appendTo(contenedor);
-
-        $('<a/>').attr('href', '').html(artista.album).appendTo('#' + artista.id);
+      $('<a/>').attr('href', '').html(album.nombre).prependTo(itemListado);
 
   }
 
