@@ -9,9 +9,8 @@ function Artista(id, nombre, imagen) {
 var Spotify = (function () {
 
   // Atributos privados
-  var artistas = [];
-
-	var claveLocalStorage = 'artistas';
+  var artistas = [];   
+  var claveLocalStorage = 'artistas';
 
   // Permite precargar los artistas favoritos por localstorage
   var precargarFavoritos = function () {
@@ -28,9 +27,9 @@ var Spotify = (function () {
 
               }        	
 
-		    }
+        }
 
-	}
+  }
 
   // Buscar artistas en api Spotify	
   var buscarArtistas = function () {
@@ -76,16 +75,16 @@ var Spotify = (function () {
 
   }
 
-	// Guarda el array de artistas en localstorage
-	var guardarArtistas = function () {
+  // Guarda el array de artistas en localstorage
+  var guardarArtistas = function () {
 
-		var datos = JSON.stringify(artistas);
+    var datos = JSON.stringify(artistas);
 
-		localStorage.setItem(claveLocalStorage, datos);
+    localStorage.setItem(claveLocalStorage, datos);
 
-	}
+  }
 
-	// Dibuja en el DOM resultados de buscar artistas	
+  // Dibuja en el DOM resultados de buscar artistas	
   var dibujarArtista = function (artista) {
 
     	var contenedor = $('#resultadoArtistas');
@@ -102,11 +101,11 @@ var Spotify = (function () {
 
               $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
 
-              agregarFavoritos(artista);        
+              agregarFavoritos(artista);
 
             })
             .appendTo('#' + artista.id);
-      		
+
   }
 
   // Dibuja en el DOM los favoritos 
@@ -167,7 +166,7 @@ var Spotify = (function () {
 
         var album = {id: datos.items[i].id, nombre: datos.items[i].name}
 
-        dibujarAlbum(artista, album); 
+        dibujarAlbum(artista, album);
 
       }  
 
@@ -185,9 +184,85 @@ var Spotify = (function () {
 
       var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id);
 
-      $('<a/>').attr('href', '').html(album.nombre).prependTo(itemListado);
+      $('<a/>')
+          .html(album.nombre)
+          .on('click', function(){
+
+            buscarCanciones(album);       
+          
+          })
+
+          .prependTo(itemListado);
+  }
+
+  // Buscar canciones del album seleccionado del artista en api Spotify 
+  var buscarCanciones = function (album) {
+               
+    $.ajax({
+  
+      url: 'https://api.spotify.com/v1/albums/' + album.id,
+      crossDomain: true,
+      dataType: "json"
+
+    }).done(function (datos) { // el parametro datos es lo que se recibe desde el servidor
+
+      // Se ejecutara esta seccion si todo salio bien
+      // Iterar sobre array
+      for (i = 0; i < datos.length; i++) {
+
+        var imagen = ''; 
+
+        if (datos[i].images.length > 0) {
+
+          imagen = datos[i].images[0].url;
+
+        }        
+
+        var albumDetalle = { imagen, nombre: datos[i].name, lanzamiento: datos[i].release_date }
+
+        dibujarAlbumDetalle(albumDetalle);
+
+      }
+
+      for (i = 0; i < datos.tracks.items.length; i++) {
+
+        var cancion = { tracknumero: datos.tracks.items[i].track_number, 
+                        nombre: datos.tracks.items[i].name, 
+                        duracion: datos.tracks.items[i].duration_ms, 
+                        link: datos.tracks.items[i].preview_url}
+
+        dibujarCanciones(cancion);
+
+      }
+
+      $('#dialogDetalleAlbum').modal('show');  
+
+    }).fail(function (jqXHR, textStatus) {
+
+      // Se ejecutara esta seccion si hubo algun problema
+      console.error("ocurrio un error inesperado...");
+
+    });
 
   }
+
+  // Dibuja en el DOM album con nombre, imagen y lanzamiento 
+  var dibujarAlbumDetalle = function (albumDetalle) {
+
+    $('.modal-title').html(albumDetalle.nombre, albumDetalle.lanzamiento).appendTo('.modal-header');
+
+    $('<img/>').attr('src', albumDetalle.imagen).css('max-width', '400px').appendTo('.modal-body');
+
+  }
+
+  // Dibuja en el DOM lista de canciones de album
+  var dibujarCanciones = function (cancion) {
+
+      var listaCanciones = $('<li/>').addClass('list-group-item').appendTo('.modal-body');
+
+      $('<a/>').attr('href', cancion.link).html(cancion.tracknumero, cancion.nombre, cancion.duracion).prependTo(listaCanciones);
+
+  }  
 
   var obtenerPosicionArtista = function (id) {
 
@@ -297,18 +372,18 @@ var Spotify = (function () {
 
   }
 
-	var iniciar = function () {
-		
+  var iniciar = function () {
+
     precargarFavoritos();
-		vincularBotonBuscar();
+    vincularBotonBuscar();
     vincularPestanias();
 	
   }
   
   return {
 
-  	limpiarSpotify: limpiarSpotify,
-		iniciar: iniciar
+    limpiarSpotify: limpiarSpotify,
+    iniciar: iniciar
 
   };
 
@@ -316,7 +391,7 @@ var Spotify = (function () {
 
 $(document).ready(function () {
 
-		Spotify.iniciar();
+    Spotify.iniciar();
 
-	}
+  }
 );    
