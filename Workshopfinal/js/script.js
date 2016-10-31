@@ -188,7 +188,9 @@ var Spotify = (function () {
           .html(album.nombre)
           .on('click', function(){
 
-            buscarCanciones(album);       
+            buscarCanciones(album);
+
+            limpiarModalDOM();       
           
           })
 
@@ -208,21 +210,19 @@ var Spotify = (function () {
 
       // Se ejecutara esta seccion si todo salio bien
       // Iterar sobre array
-      for (i = 0; i < datos.length; i++) {
 
         var imagen = ''; 
 
-        if (datos[i].images.length > 0) {
+        if (datos.images.length > 0) {
 
-          imagen = datos[i].images[0].url;
+          imagen = datos.images[0].url;
 
         }        
 
-        var albumDetalle = { imagen, nombre: datos[i].name, lanzamiento: datos[i].release_date }
+        var albumDetalle = { imagen: imagen, nombre: datos.name, lanzamiento: datos.release_date }
 
         dibujarAlbumDetalle(albumDetalle);
 
-      }
 
       for (i = 0; i < datos.tracks.items.length; i++) {
 
@@ -249,18 +249,23 @@ var Spotify = (function () {
   // Dibuja en el DOM album con nombre, imagen y lanzamiento 
   var dibujarAlbumDetalle = function (albumDetalle) {
 
-    $('.modal-title').html(albumDetalle.nombre, albumDetalle.lanzamiento).appendTo('.modal-header');
+    var albumFechaFormateada = moment(albumDetalle.lanzamiento).format('DD/MM/YYYY');    
 
-    $('<img/>').attr('src', albumDetalle.imagen).css('max-width', '400px').appendTo('.modal-body');
+    $('.modal-title').html(albumDetalle.nombre + ' - ' + albumFechaFormateada).appendTo('.modal-header');
+
+    $('<img/>').attr('src', albumDetalle.imagen).css('max-width', '310px').appendTo('.modal-body');
 
   }
 
   // Dibuja en el DOM lista de canciones de album
   var dibujarCanciones = function (cancion) {
 
+      var cancionDuracionFormateada = moment(cancion.duracion).format('mm:ss');
+
       var listaCanciones = $('<li/>').addClass('list-group-item').appendTo('.modal-body');
 
-      $('<a/>').attr('href', cancion.link).html(cancion.tracknumero, cancion.nombre, cancion.duracion).prependTo(listaCanciones);
+      $('<a/>')
+        .attr('href', cancion.link).html(cancion.tracknumero + ' - ' + cancion.nombre + ' - ' + cancionDuracionFormateada).prependTo(listaCanciones);
 
   }  
 
@@ -315,6 +320,13 @@ var Spotify = (function () {
     localStorage.removeItem(claveLocalStorage);
 
     limpiarArtistasDOM;
+
+  }
+
+  // Limpiar elementos del modal cuando se hace click en un segundo album
+  var limpiarModalDOM = function () {
+
+    $('.modal-body').empty();
 
   }
 
