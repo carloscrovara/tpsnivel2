@@ -99,7 +99,7 @@ var Spotify = (function () {
       	$('<span/>').addClass('glyphicon glyphicon-star-empty')
             .on('click', function(){
 
-              $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
+              $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star')
 
               agregarFavoritos(artista);
 
@@ -265,7 +265,19 @@ var Spotify = (function () {
       var listaCanciones = $('<li/>').addClass('list-group-item').appendTo('.modal-body');
 
       $('<a/>')
-        .attr('href', cancion.link).html(cancion.tracknumero + ' - ' + cancion.nombre + ' - ' + cancionDuracionFormateada).prependTo(listaCanciones);
+        .html(cancion.tracknumero + ' - ' + cancion.nombre + ' - ' + cancionDuracionFormateada)
+        .on('click', function(){
+
+            $('#iframe').remove();
+
+            $('<iframe/>')
+              .attr('id', 'iframe')
+              .attr('src', cancion.link)
+              .css('max-height', '100px')
+              .appendTo('.modal-body');
+
+        })        
+        .prependTo(listaCanciones);
 
   }  
 
