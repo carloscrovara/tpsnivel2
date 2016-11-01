@@ -95,7 +95,10 @@ var Spotify = (function () {
                                       .addClass('btn btn-default btn-xs')
                                       .appendTo('#' + artista.id)
 
-        $('<span/>').addClass('glyphicon glyphicon-star-empty').html('Agregar')
+        $('<span/>')
+            .addClass('glyphicon glyphicon-star-empty')
+            .css('font-size', '15px')
+            .html('Agregar')
             .on('click', function(){
 
               $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
@@ -124,7 +127,9 @@ var Spotify = (function () {
                                       .addClass('btn btn-default btn-xs')
                                       .appendTo('#' + artista.id)
 
-        $('<span/>').addClass('glyphicon glyphicon-remove').html('Eliminar')
+        $('<span/>')
+            .addClass('glyphicon glyphicon-remove')
+            .html('Eliminar')
             .on('click', function(){
 
               eliminarArtistaFavorito(artista.id);
@@ -134,11 +139,11 @@ var Spotify = (function () {
         
         var botonVerAlbumes = $('<button/>')
                                       .addClass('btn btn-default btn-xs')
-                                      .appendTo('#' + artista.id)
+                                      .appendTo('#' + artista.id)  
 
         $('<a/>')
             .attr('id', artista.id)
-            .html('Ver álbumes')             
+            .html('Ver álbumes')            
             .on('click', function(){
 
               buscarAlbumes(artista);       
@@ -149,7 +154,7 @@ var Spotify = (function () {
 
   }
 
-  var agregarFavoritos = function (artista) {  
+  var agregarFavoritos = function (artista) {
 
       artistas.push(artista);
 
@@ -193,7 +198,9 @@ var Spotify = (function () {
       var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id);
 
       $('<a/>')
-          .html(' > ' + album.nombre)
+          .attr('href', '#dialogDetalleAlbum')
+          .attr('id', album.id)
+          .html(' ' + album.nombre)
           .on('click', function(){
 
             buscarCanciones(album);
@@ -203,6 +210,10 @@ var Spotify = (function () {
           })
 
           .prependTo(itemListado);
+
+      $('<span/>')
+          .addClass('glyphicon glyphicon-hand-right')
+          .prependTo('#' + album.id)          
 
   }
 
@@ -273,20 +284,25 @@ var Spotify = (function () {
 
       var listaCanciones = $('<li/>').addClass('list-group-item').appendTo('.modal-body');
 
-      $('<a/>')
-        .html(cancion.tracknumero + ' - ' + cancion.nombre + ' - ' + cancionDuracionFormateada)
-        .on('click', function(){
+      var linkCanciones = $('<a/>')
+                            .html(' ' + cancion.tracknumero + ' - ' + cancion.nombre + ' - ' + cancionDuracionFormateada)
+                            .attr('href', '#iframe')
+                            .on('click', function(){
+                                
+                                $('#iframe').remove();
 
-            $('#iframe').remove();
+                                $('<iframe/>')
+                                    .attr('id', 'iframe')
+                                    .attr('src', cancion.link)
+                                    .css('max-height', '100px')
+                                    .appendTo('.modal-body');
 
-            $('<iframe/>')
-              .attr('id', 'iframe')
-              .attr('src', cancion.link)
-              .css('max-height', '100px')
-              .appendTo('.modal-body');
+                            })        
+                            .prependTo(listaCanciones);
 
-        })        
-        .prependTo(listaCanciones);
+      $('<span/>')
+        .addClass('glyphicon glyphicon-headphones')
+        .prependTo(linkCanciones)
 
   }  
 
