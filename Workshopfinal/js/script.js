@@ -21,12 +21,6 @@ var Spotify = (function () {
 
             artistas = JSON.parse(datos);
 
-              for (i = 0; i < artistas.length; i++) {
-        
-                dibujarFavoritos(artistas[i]);
-
-              }        	
-
         }
 
   }
@@ -99,7 +93,7 @@ var Spotify = (function () {
       	$('<span/>').addClass('glyphicon glyphicon-star-empty')
             .on('click', function(){
 
-              $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star')
+              $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
 
               agregarFavoritos(artista);
 
@@ -190,7 +184,7 @@ var Spotify = (function () {
 
             buscarCanciones(album);
 
-            limpiarModalDOM();       
+            $('.modal-body').empty();       
           
           })
 
@@ -335,13 +329,6 @@ var Spotify = (function () {
 
   }
 
-  // Limpiar elementos del modal cuando se hace click en un segundo album
-  var limpiarModalDOM = function () {
-
-    $('.modal-body').empty();
-
-  }
-
   // Vincular boton de buscar con funcion buscarArtistas
   var vincularBotonBuscar = function () {
 
@@ -376,9 +363,9 @@ var Spotify = (function () {
 
             cambiarPestaniaBuscador();
 
-            $('#pestaniaBuscador').removeClass('hidden')
+            $('#pestaniaBuscador').removeClass('hidden');
 
-            $('#pestaniaFavoritos').addClass('hidden')
+            $('#pestaniaFavoritos').addClass('hidden');
       })
 
     
@@ -388,9 +375,17 @@ var Spotify = (function () {
 
             cambiarPestaniaFavoritos();
 
-            $('#pestaniaFavoritos').removeClass('hidden')
+            $('#pestaniaFavoritos').removeClass('hidden');
 
-            $('#pestaniaBuscador').addClass('hidden')
+            $('#pestaniaBuscador').addClass('hidden');
+
+            $('#resultadoFavoritos, #resultadoArtistas').empty();
+
+            for (i = 0; i < artistas.length; i++) {
+        
+                dibujarFavoritos(artistas[i]);
+
+            }  
 
         })  
 
@@ -398,7 +393,7 @@ var Spotify = (function () {
 
   var iniciar = function () {
 
-    precargarFavoritos();
+    precargarFavoritos();   
     vincularBotonBuscar();
     vincularPestanias();
 	
