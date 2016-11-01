@@ -90,7 +90,12 @@ var Spotify = (function () {
 
       	$('<img/>').attr('src', artista.imagen).css('max-width', '400px').appendTo('#' + artista.id);
       	$('<h3/>').html(artista.nombre).appendTo('#' + artista.id);
-      	$('<span/>').addClass('glyphicon glyphicon-star-empty')
+
+        var botonAgregarFavoritos = $('<button/>')
+                                      .addClass('btn btn-default btn-xs')
+                                      .appendTo('#' + artista.id)
+
+        $('<span/>').addClass('glyphicon glyphicon-star-empty').html('Agregar')
             .on('click', function(){
 
               $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
@@ -98,7 +103,7 @@ var Spotify = (function () {
               agregarFavoritos(artista);
 
             })
-            .appendTo('#' + artista.id);
+            .appendTo(botonAgregarFavoritos);
 
   }
 
@@ -114,14 +119,23 @@ var Spotify = (function () {
 
         $('<img/>').attr('src', artista.imagen).css('max-width', '400px').appendTo('#' + artista.id);
         $('<h3/>').html(artista.nombre).appendTo('#' + artista.id);
-        $('<span/>').addClass('glyphicon glyphicon-remove')
+
+        var botonEliminarArtistaFav = $('<button/>')
+                                      .addClass('btn btn-default btn-xs')
+                                      .appendTo('#' + artista.id)
+
+        $('<span/>').addClass('glyphicon glyphicon-remove').html('Eliminar')
             .on('click', function(){
 
               eliminarArtistaFavorito(artista.id);
 
             })
-            .appendTo('#' + artista.id);
+            .appendTo(botonEliminarArtistaFav);
         
+        var botonVerAlbumes = $('<button/>')
+                                      .addClass('btn btn-default btn-xs')
+                                      .appendTo('#' + artista.id)
+
         $('<a/>')
             .attr('id', artista.id)
             .html('Ver álbumes')             
@@ -131,7 +145,7 @@ var Spotify = (function () {
 
             })
 
-            .appendTo('#' + artista.id);     
+            .appendTo(botonVerAlbumes);     
 
   }
 
@@ -179,7 +193,7 @@ var Spotify = (function () {
       var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id);
 
       $('<a/>')
-          .html(album.nombre)
+          .html(' > ' + album.nombre)
           .on('click', function(){
 
             buscarCanciones(album);
@@ -189,6 +203,7 @@ var Spotify = (function () {
           })
 
           .prependTo(itemListado);
+
   }
 
   // Buscar canciones del album seleccionado del artista en api Spotify 
@@ -382,10 +397,10 @@ var Spotify = (function () {
             $('#resultadoFavoritos, #resultadoArtistas').empty();
 
             for (i = 0; i < artistas.length; i++) {
-        
-                dibujarFavoritos(artistas[i]);
 
-            }  
+              dibujarFavoritos(artistas[i]);
+
+            }
 
         })  
 
