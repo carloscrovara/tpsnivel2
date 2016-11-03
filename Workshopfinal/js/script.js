@@ -169,14 +169,18 @@ var Spotify = (function () {
 
         $('<a/>')
             .attr('id', artista.id)
-            .html('Ver álbumes')            
+            .html('Ver álbumes')          
             .on('click', function(){
-
-              buscarAlbumes(artista);       
+              $('#' + artista.id + ' ul').empty();
+              buscarAlbumes(artista);
 
             })
 
-            .appendTo(botonVerAlbumes);     
+            .appendTo(botonVerAlbumes);
+
+        $('<ul/>')
+          .addClass('list-group')
+          .appendTo('#' + artista.id);         
 
   }
 
@@ -231,7 +235,7 @@ var Spotify = (function () {
   // Dibuja en el DOM albumes de artistas 
   var dibujarAlbum = function (artista, album) {
 
-      var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id);
+      var itemListado = $('<li/>').addClass('list-group-item').appendTo('#' + artista.id + ' ul');
 
       $('<a/>')
           .attr('href', '#dialogDetalleAlbum')
@@ -416,9 +420,15 @@ var Spotify = (function () {
   // Vincular boton de buscar con funcion buscarArtistas
   var vincularBotonBuscar = function () {
 
-    	$('#buscarArtistas').on('click', buscarArtistas);
+    	$('#buscarArtistas')
+          .on('click', function(){
 
-  }
+            $('#resultadoArtistas').empty();
+
+            buscarArtistas(); 
+
+          })
+  }         
 
   // Activar pestania favoritos
   var cambiarPestaniaFavoritos = function () {
