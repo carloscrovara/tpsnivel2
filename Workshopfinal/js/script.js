@@ -93,20 +93,46 @@ var Spotify = (function () {
 
         var botonAgregarFavoritos = $('<button/>')
                                       .addClass('btn btn-default btn-xs')
-                                      .appendTo('#' + artista.id)
+                                      .appendTo('#' + artista.id);
 
-        $('<span/>')
+
+        var existe = existeArtista(artista);
+        if (existe) {
+          $('<span/>')
+            .addClass('glyphicon glyphicon-star')
+            .css('font-size', '15px')
+            .html('Eliminar')
+            .on('click', function(){
+              eliminarArtistaFavorito(artista, false);
+            })
+            .appendTo(botonAgregarFavoritos);
+
+        }else{
+            $('<span/>')
             .addClass('glyphicon glyphicon-star-empty')
             .css('font-size', '15px')
             .html('Agregar')
             .on('click', function(){
-
-              $(this).removeClass('glyphicon-star-empty').addClass('glyphicon glyphicon-star');
-
               agregarFavoritos(artista);
-
             })
             .appendTo(botonAgregarFavoritos);
+        }
+  }
+
+  // Funcion para saber si existe o no un artista a partir de un id dado. Tiene que retornar un booleano
+  var existeArtista = function (artista) {
+
+    for (var i = 0; i < artistas.length; i++) {
+
+      if (artistas[i].id === artista.id) {
+
+        return true;
+
+      }
+
+    }
+
+    return false; 
 
   }
 
@@ -132,7 +158,7 @@ var Spotify = (function () {
             .html('Eliminar')
             .on('click', function(){
 
-              eliminarArtistaFavorito(artista.id);
+                eliminarArtistaFavorito(artista, true);
 
             })
             .appendTo(botonEliminarArtistaFav);
@@ -160,8 +186,18 @@ var Spotify = (function () {
 
       guardarArtistas();
 
-  } 	
+                  $('li#' + artista.id + ' span')
+                    .removeClass('glyphicon glyphicon-star-empty')
+                    .addClass('glyphicon glyphicon-star')
+                    .html('Eliminar')
+                    .off('click')                    
+                    .on('click', function(){
 
+                        eliminarArtistaFavorito(artista, false);
+                    })                  
+
+  }
+	
   // Buscar albumes de artista seleccionado en api Spotify 
   var buscarAlbumes = function (artista) {
                
@@ -332,17 +368,34 @@ var Spotify = (function () {
 
   }    
 
-  var eliminarArtistaFavorito = function (id) {
+  var eliminarArtistaFavorito = function (artista, solapaFavoritos) {
 
+    var id = artista.id;
     var posicion = obtenerPosicionArtista(id);
 
     artistas.splice(posicion, 1);
 
     guardarArtistas();
 
-    borrarArtistaDOM(id);
+    if (solapaFavoritos === true){
+      
+      borrarArtistaDOM(id);
+
+    }
+
+    else {
+            $('li#' + id + ' span')
+              .removeClass('glyphicon glyphicon-star')
+              .addClass('glyphicon glyphicon-star-empty')
+              .html('Agregar')
+              .off('click')
+              .on('click', function(){
+                  agregarFavoritos(artista);
+              })    
+    }
 
   }
+
 
   var limpiarArtistasDOM = function () {
 
@@ -414,7 +467,7 @@ var Spotify = (function () {
 
             for (i = 0; i < artistas.length; i++) {
 
-              dibujarFavoritos(artistas[i]);
+                dibujarFavoritos(artistas[i]);
 
             }
 
