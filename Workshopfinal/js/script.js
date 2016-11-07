@@ -69,6 +69,20 @@ var Spotify = (function () {
 
   }
 
+  // Apretar Enter despues de ingresar nombre de artista a buscar
+  var enterBusqueda = function () {
+
+    $('#buscadorArtistas').on('keypress', function (e) {
+         
+          if(e.which === 13){
+        
+            buscarArtistas();
+    
+          }
+    });
+
+  }
+
   // Guarda el array de artistas en localstorage
   var guardarArtistas = function () {
 
@@ -489,6 +503,7 @@ var Spotify = (function () {
 
     precargarFavoritos();   
     vincularBotonBuscar();
+    enterBusqueda();
     vincularPestanias();
 	
   }
